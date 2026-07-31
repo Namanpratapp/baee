@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>A Little Mail for babyyy 🌹</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fbeee9;
+    --blush:#f3d3ce;
+    --rose:#b83b52;
+    --rose-deep:#8f2439;
+    --pink-soft:#eab0b8;
+    --ink:#3a2a28;
+    --gold:#c99a4a;
+    --leaf:#7d9471;
+    --paper:#fff8f2;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Cormorant Garamond', serif;
+    background:
+      repeating-linear-gradient(0deg, rgba(184,59,82,0.05) 0 2px, transparent 2px 64px),
+      repeating-linear-gradient(90deg, rgba(184,59,82,0.05) 0 2px, transparent 2px 64px),
+      radial-gradient(1200px 800px at 15% 10%, #fdf1ec 0%, var(--cream) 55%),
+      var(--cream);
+    color:var(--ink);
+    overflow:hidden;
+    height:100vh;
+    width:100vw;
+    position:relative;
+  }
+  /* ---------- corner rose decor ---------- */
+  .corner-decor{
+    position:fixed; width:220px; height:220px; pointer-events:none; z-index:2; opacity:0.9;
+  }
+  .corner-decor.tl{top:-40px; left:-40px;}
+  .corner-decor.br{bottom:-40px; right:-40px; transform:rotate(180deg);}
+  .corner-decor svg{width:100%; height:100%;}
+
+  .goodluck{
+    position:fixed; right:14px; top:50%; transform:translateY(-50%) rotate(180deg);
+    writing-mode:vertical-rl; letter-spacing:6px; font-family:'Marcellus',serif;
+    font-size:11px; color:var(--rose-deep); opacity:0.55; z-index:3; user-select:none;
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:50;
+    display:flex; gap:6px; background:rgba(255,248,242,0.75); backdrop-filter:blur(6px);
+    padding:8px 10px; border-radius:30px; box-shadow:0 4px 20px rgba(143,36,57,0.12);
+    border:1px solid rgba(184,59,82,0.15);
+  }
+  nav button{
+    width:11px; height:11px; border-radius:50%; border:1.5px solid var(--rose);
+    background:transparent; cursor:pointer; transition:all .35s ease; padding:0;
+  }
+  nav button.active{ background:var(--rose); width:26px; border-radius:8px; }
+
+  .pagelabel{
+    position:fixed; top:20px; right:22px; z-index:50; font-family:'Marcellus',serif;
+    font-size:11px; letter-spacing:3px; color:var(--rose-deep); opacity:0.6;
+  }
+
+  /* ---------- pages ---------- */
+  .pages{ height:100%; width:100%; position:relative; }
+  .page{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    flex-direction:column; text-align:center; padding:40px 24px;
+    opacity:0; pointer-events:none; transform:scale(0.96);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .page.active{ opacity:1; pointer-events:auto; transform:scale(1); z-index:5;}
+
+  /* floating hearts/petals */
+  .float-layer{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1;}
+  .petal{ position:absolute; top:-10%; font-size:20px; opacity:0.65; animation:fall linear infinite; }
+  @keyframes fall{
+    to{ transform:translateY(115vh) rotate(360deg); }
+  }
+  @keyframes sway{
+    0%,100%{ margin-left:0; } 50%{ margin-left:40px; }
+  }
+
+  /* ---------- PAGE 1 : COVER ---------- */
+  .script{ font-family:'Great Vibes', cursive; color:var(--rose); line-height:1; }
+  .hand{ font-family:'Caveat', cursive; font-weight:700; color:var(--ink); }
+  .p1-line1{ font-size:clamp(38px,7vw,64px); }
+  .p1-line2{ font-size:clamp(30px,5.6vw,48px); margin:6px 0; }
+  .p1-line3{ font-size:clamp(38px,7vw,64px); display:flex; align-items:center; gap:10px; justify-content:center;}
+  .p1-name{ font-family:'Great Vibes',cursive; color:var(--rose-deep); font-size:clamp(30px,5vw,44px); margin-top:6px;}
+
+  .mailbox-wrap{ margin-top:18px; cursor:pointer; }
+  .hint{ margin-top:10px; font-family:'Marcellus',serif; font-size:12px; letter-spacing:2px; color:var(--rose-deep); opacity:0.7; animation:pulse 1.8s ease-in-out infinite;}
+  @keyframes pulse{ 0%,100%{opacity:.4;} 50%{opacity:.9;} }
+
+  /* ---------- PAGE 2: ROSE GARDEN ---------- */
+  .p2-title{ font-family:'Great Vibes',cursive; font-size:clamp(34px,6vw,54px); color:var(--rose-deep); margin-bottom:6px;}
+  .p2-sub{ font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(16px,2.4vw,20px); max-width:520px; color:var(--ink); opacity:.85; margin-bottom:26px;}
+  .garden{ display:flex; gap:18px; align-items:flex-end; }
+  .rose{ width:56px; opacity:0; transform:translateY(30px) scale(.7); animation:bloom .9s cubic-bezier(.2,.9,.3,1.3) forwards; }
+  .rose svg{ width:100%; display:block; filter:drop-shadow(0 6px 10px rgba(143,36,57,0.18)); }
+  @keyframes bloom{ to{ opacity:1; transform:translateY(0) scale(1);} }
+
+  /* ---------- PAGE 3: COMPLIMENTS ---------- */
+  .p3-title{ font-family:'Great Vibes',cursive; font-size:clamp(34px,6vw,54px); color:var(--rose-deep); margin-bottom:22px;}
+  .cards{ display:flex; gap:16px; flex-wrap:wrap; justify-content:center; max-width:640px;}
+  .card{ width:130px; height:160px; perspective:900px; cursor:pointer; }
+  .card-inner{ position:relative; width:100%; height:100%; transition:transform .6s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d;}
+  .card.flipped .card-inner{ transform:rotateY(180deg); }
+  .card-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:14px; display:flex; align-items:center; justify-content:center; padding:12px; box-shadow:0 8px 18px rgba(143,36,57,0.15);}
+  .card-front{ background:linear-gradient(160deg,var(--pink-soft),var(--blush)); }
+  .card-front span{ font-size:26px; }
+  .card-back{ background:var(--paper); transform:rotateY(180deg); border:1px solid rgba(184,59,82,.25); font-family:'Caveat',cursive; font-size:18px; color:var(--rose-deep); font-weight:700; line-height:1.25;}
+  .p3-hint{ margin-top:18px; font-family:'Marcellus',serif; font-size:11px; letter-spacing:2px; color:var(--rose-deep); opacity:.6;}
+
+  /* ---------- PAGE 4: GALLERY ---------- */
+  .gallery{ display:flex; gap:20px; flex-wrap:wrap; justify-content:center; max-width:640px; }
+  .polaroid{
+    position:relative; width:130px; background:#fff; padding:8px 8px 22px 8px;
+    border-radius:3px; box-shadow:0 10px 22px rgba(143,36,57,.2);
+    transition:transform .3s ease; cursor:default;
+  }
+  .polaroid img{
+    width:100%; height:130px; object-fit:cover; display:block; border-radius:2px;
+    background:linear-gradient(160deg,var(--pink-soft),var(--blush));
+  }
+  .polaroid span{ position:absolute; bottom:-2px; right:6px; font-size:16px; }
+  .polaroid:hover{ transform:translateY(-6px) scale(1.03); }
+  .p-1{ transform:rotate(-6deg); } .p-1:hover{ transform:rotate(-6deg) translateY(-6px) scale(1.03); }
+  .p-2{ transform:rotate(4deg); margin-top:14px;} .p-2:hover{ transform:rotate(4deg) translateY(-6px) scale(1.03); }
+  .p-3{ transform:rotate(-3deg); margin-top:6px;} .p-3:hover{ transform:rotate(-3deg) translateY(-6px) scale(1.03); }
+  .p-4{ transform:rotate(6deg); } .p-4:hover{ transform:rotate(6deg) translateY(-6px) scale(1.03); }
+  @media (max-width:520px){
+    .polaroid{ width:110px; }
+    .polaroid img{ height:110px; }
+  }
+
+  /* ---------- PAGE 5: LETTER ---------- */
+  .envelope-stage{ display:flex; flex-direction:column; align-items:center; }
+  .env-title{ font-family:'Great Vibes',cursive; font-size:clamp(30px,5.4vw,46px); color:var(--rose-deep); margin-bottom:18px;}
+  .envelope{ position:relative; width:min(78vw,320px); height:min(50vw,208px); cursor:pointer; }
+  .envelope .body{ position:absolute; inset:0; background:linear-gradient(160deg,#fff,#fbe9e6); border-radius:6px; box-shadow:0 14px 30px rgba(143,36,57,0.22); border:1px solid rgba(184,59,82,.2);}
+  .envelope .flap{ position:absolute; top:0; left:0; width:100%; height:60%; background:linear-gradient(160deg,#f6d8d3,#f2c3bd); clip-path:polygon(0 0,100% 0,50% 100%); transform-origin:top; transition:transform .8s cubic-bezier(.3,.7,.2,1); z-index:3; border-radius:6px 6px 0 0;}
+  .envelope.open .flap{ transform:rotateX(180deg); }
+  .envelope .seal{ position:absolute; top:38%; left:50%; transform:translate(-50%,-50%); width:46px; height:46px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #d6607a, var(--rose-deep)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:18px; z-index:4; box-shadow:0 3px 8px rgba(0,0,0,.25); transition:opacity .3s ease .2s;}
+  .envelope.open .seal{ opacity:0; }
+  .letter-paper{ position:absolute; left:6%; right:6%; bottom:6%; top:14%; background:var(--paper); border-radius:4px; box-shadow:0 4px 10px rgba(0,0,0,.08); transform:translateY(0); transition:transform .9s cubic-bezier(.2,.8,.2,1) .15s; z-index:2; padding:16px 14px; overflow:hidden;}
+  .envelope.open .letter-paper{ transform:translateY(-64%); z-index:5; }
+  .letter-paper p{ font-family:'Caveat',cursive; font-size:14px; color:var(--ink); text-align:left; line-height:1.35;}
+  .env-hint{ margin-top:16px; font-family:'Marcellus',serif; font-size:11px; letter-spacing:2px; color:var(--rose-deep); opacity:.65;}
+  .full-letter{ display:none; max-width:480px; margin-top:10px; background:var(--paper); border-radius:10px; padding:26px 28px; box-shadow:0 14px 30px rgba(143,36,57,.18); border:1px solid rgba(184,59,82,.15);}
+  .full-letter.show{ display:block; animation:fadeUp .7s ease forwards;}
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
+  .full-letter p{ font-family:'Cormorant Garamond',serif; font-size:17px; line-height:1.6; text-align:left; margin-bottom:10px;}
+  .full-letter .sign{ font-family:'Great Vibes',cursive; font-size:26px; color:var(--rose-deep); text-align:right; margin-top:6px;}
+
+  /* ---------- PAGE 5: CLOSING ---------- */
+  .stamp{ width:96px; height:96px; border:3px dashed var(--rose); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px; transform:rotate(-8deg); animation:stampIn .8s cubic-bezier(.3,1.4,.4,1);}
+  @keyframes stampIn{ from{ transform:scale(2) rotate(-8deg); opacity:0;} to{ transform:scale(1) rotate(-8deg); opacity:1;} }
+  .stamp span{ font-family:'Marcellus',serif; font-size:10px; letter-spacing:1px; color:var(--rose-deep); text-align:center; line-height:1.4;}
+  .p5-title{ font-family:'Great Vibes',cursive; font-size:clamp(34px,6.4vw,58px); color:var(--rose-deep); margin-bottom:10px;}
+  .p5-sub{ font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(15px,2.2vw,19px); max-width:460px; color:var(--ink); opacity:.85; margin-bottom:10px;}
+  .p5-sign{ font-family:'Great Vibes',cursive; font-size:clamp(26px,4vw,34px); color:var(--rose); margin-top:14px;}
+  .replay{ margin-top:26px; border:1px solid var(--rose); background:transparent; color:var(--rose-deep); font-family:'Marcellus',serif; font-size:11px; letter-spacing:2px; padding:10px 22px; border-radius:24px; cursor:pointer; transition:all .3s ease;}
+  .replay:hover{ background:var(--rose); color:#fff;}
+
+  @media (max-width:520px){
+    .cards{ gap:10px; }
+    .card{ width:104px; height:130px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="corner-decor tl">
+  <svg viewBox="0 0 220 220"><g fill="none" stroke="#b83b52" stroke-width="2" opacity="0.5">
+    <path d="M10 10 Q60 40 40 90" />
+    <circle cx="42" cy="30" r="14" fill="#eab0b8" stroke="none" opacity=".8"/>
+    <circle cx="70" cy="55" r="10" fill="#f3d3ce" stroke="none" opacity=".8"/>
+    <path d="M20 60 Q10 80 30 95" stroke="#7d9471"/>
+  </g></svg>
+</div>
+<div class="corner-decor br">
+  <svg viewBox="0 0 220 220"><g fill="none" stroke="#b83b52" stroke-width="2" opacity="0.5">
+    <path d="M10 10 Q60 40 40 90" />
+    <circle cx="42" cy="30" r="14" fill="#eab0b8" stroke="none" opacity=".8"/>
+    <circle cx="70" cy="55" r="10" fill="#f3d3ce" stroke="none" opacity=".8"/>
+    <path d="M20 60 Q10 80 30 95" stroke="#7d9471"/>
+  </g></svg>
+</div>
+
+<div class="goodluck">✦ good luck ✦</div>
+
+<div class="float-layer" id="floatLayer"></div>
+
+<nav id="dots"></nav>
+<div class="pagelabel" id="pageLabel">PAGE 1 / 5</div>
+
+<div class="pages">
+
+  <!-- PAGE 1 -->
+  <section class="page active" data-page="0">
+    <div class="p1-line1 script">A little mail</div>
+    <div class="p1-line2 hand">just for you,</div>
+    <div class="p1-line3 script">babyyy <span style="font-size:0.6em;">🌸</span></div>
+    <div class="mailbox-wrap" id="openMailbox">
+      <svg width="120" height="120" viewBox="0 0 100 100">
+        <rect x="30" y="34" width="40" height="34" rx="6" fill="#b83b52"/>
+        <rect x="30" y="34" width="40" height="14" rx="6" fill="#c9506a"/>
+        <rect x="20" y="60" width="60" height="6" rx="2" fill="#8f2439"/>
+        <rect x="45" y="66" width="10" height="18" fill="#8f2439"/>
+        <rect x="34" y="50" width="32" height="8" rx="2" fill="#fbeee9"/>
+        <text x="50" y="56" font-size="6" text-anchor="middle" fill="#8f2439" font-family="Marcellus">MAIL</text>
+        <circle cx="66" cy="42" r="2.4" fill="#c99a4a"/>
+      </svg>
+    </div>
+    <div class="hint">tap the mailbox to begin</div>
+  </section>
+
+  <!-- PAGE 2 -->
+  <section class="page" data-page="1">
+    <div class="p2-title">just because</div>
+    <div class="p2-sub">Not every rose needs a reason — some days you just deserve one, simply for being you.</div>
+    <div class="garden" id="garden"></div>
+  </section>
+
+  <!-- PAGE 3 -->
+  <section class="page" data-page="2">
+    <div class="p3-title">a few little truths</div>
+    <div class="cards" id="cards"></div>
+    <div class="p3-hint">tap each rose to flip it open</div>
+  </section>
+
+  <!-- PAGE 4: GALLERY -->
+  <section class="page" data-page="3">
+    <div class="p3-title" style="margin-bottom:26px;">a few favorites</div>
+    <div class="gallery">
+      <div class="polaroid p-1"><img src="img 1.png" alt="img1"><span>🌹</span></div>
+      <div class="polaroid p-2"><img src="img 2.png" alt="img2"><span>💗</span></div>
+      <div class="polaroid p-3"><img src="img 3.png" alt="img3"><span>🌸</span></div>
+      <div class="polaroid p-4"><img src="img 4.png" alt="img4"><span>✨</span></div>
+    </div>
+  </section>
+
+  <!-- PAGE 5 -->
+  <section class="page" data-page="4">
+    <div class="envelope-stage">
+      <div class="env-title">one more thing</div>
+      <div class="envelope" id="envelope">
+        <div class="body"></div>
+        <div class="letter-paper"><p>Dear babyyy, I wrote you something...</p></div>
+        <div class="flap"></div>
+        <div class="seal">🌹</div>
+      </div>
+      <div class="env-hint" id="envHint">tap the envelope to open it</div>
+      <div class="full-letter" id="fullLetter">
+        <p>Dear babyyy,</p>
+        <p>I just wanted to send you something soft to land on today — a little proof that you're thought of, appreciated, and adored, on an entirely ordinary afternoon that needed no excuse to become a good one.</p>
+        <p>You make ordinary things feel a little more like roses. Thank you for being exactly who you are.</p>
+        <div class="sign">with love</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 6 -->
+  <section class="page" data-page="5">
+    <div class="stamp"><span>DELIVERED<br>WITH LOVE</span></div>
+    <div class="p5-title">mail delivered</div>
+    <div class="p5-sub">to babyyy's heart, safely and completely — sealed with a rose, sent with everything I've got.</div>
+    <div class="p5-sign">yours, always</div>
+    <button class="replay" id="replayBtn">SEND AGAIN</button>
+  </section>
+
+</div>
+
+<script>
+  const pages = document.querySelectorAll('.page');
+  const dotsWrap = document.getElementById('dots');
+  const pageLabel = document.getElementById('pageLabel');
+  let current = 0;
+
+  pages.forEach((_, i) => {
+    const b = document.createElement('button');
+    if (i === 0) b.classList.add('active');
+    b.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(b);
+  });
+
+  function goTo(i){
+    if (i < 0 || i >= pages.length) return;
+    pages[current].classList.remove('active');
+    dotsWrap.children[current].classList.remove('active');
+    current = i;
+    pages[current].classList.add('active');
+    dotsWrap.children[current].classList.add('active');
+    pageLabel.textContent = `PAGE ${current+1} / ${pages.length}`;
+  }
+
+  // swipe / wheel navigation
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (dx < -50) goTo(current+1);
+    if (dx > 50) goTo(current-1);
+  });
+  let wheelLock = false;
+  document.addEventListener('wheel', e => {
+    if (wheelLock) return;
+    if (Math.abs(e.deltaY) < 30) return;
+    wheelLock = true;
+    if (e.deltaY > 0) goTo(current+1); else goTo(current-1);
+    setTimeout(()=> wheelLock=false, 700);
+  });
+
+  // floating petals
+  const floatLayer = document.getElementById('floatLayer');
+  const petals = ['🌸','🌹','✨','💗'];
+  for(let i=0;i<16;i++){
+    const el = document.createElement('div');
+    el.className = 'petal';
+    el.textContent = petals[Math.floor(Math.random()*petals.length)];
+    el.style.left = Math.random()*100 + '%';
+    el.style.animationDuration = (10 + Math.random()*10) + 's';
+    el.style.animationDelay = (Math.random()*10) + 's';
+    el.style.fontSize = (12 + Math.random()*14) + 'px';
+    floatLayer.appendChild(el);
+  }
+
+  // page 1 open -> go to page 2
+  document.getElementById('openMailbox').addEventListener('click', () => goTo(1));
+
+  // page 2 rose garden
+  const roseSVG = `<svg viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30 40 L30 88" stroke="#7d9471" stroke-width="3" fill="none"/>
+    <path d="M30 60 Q14 62 12 74" stroke="#7d9471" stroke-width="3" fill="none"/>
+    <path d="M30 68 Q46 70 48 82" stroke="#7d9471" stroke-width="3" fill="none"/>
+    <g>
+      <circle cx="30" cy="24" r="16" fill="#c9506a"/>
+      <circle cx="30" cy="24" r="11" fill="#d97186"/>
+      <circle cx="30" cy="24" r="6" fill="#e8909f"/>
+    </g>
+  </svg>`;
+  const garden = document.getElementById('garden');
+  for(let i=0;i<5;i++){
+    const d = document.createElement('div');
+    d.className='rose';
+    d.style.animationDelay = (i*0.18)+'s';
+    d.innerHTML = roseSVG;
+    garden.appendChild(d);
+  }
+
+  // page 3 compliment cards
+  const compliments = [
+    "your smile fixes bad days",
+    "your kindness is rare",
+    "you make ordinary feel golden",
+    "your heart is genuinely beautiful",
+    "you're my favorite kind of person"
+  ];
+  const cardsWrap = document.getElementById('cards');
+  compliments.forEach(text => {
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = `<div class="card-inner">
+      <div class="card-face card-front"><span>🌹</span></div>
+      <div class="card-face card-back">${text}</div>
+    </div>`;
+    c.addEventListener('click', () => c.classList.toggle('flipped'));
+    cardsWrap.appendChild(c);
+  });
+
+  // page 4 envelope
+  const envelope = document.getElementById('envelope');
+  const envHint = document.getElementById('envHint');
+  const fullLetter = document.getElementById('fullLetter');
+  envelope.addEventListener('click', () => {
+    envelope.classList.add('open');
+    envHint.style.opacity = '0';
+    setTimeout(() => fullLetter.classList.add('show'), 500);
+  });
+
+  // page 5 replay
+  document.getElementById('replayBtn').addEventListener('click', () => {
+    envelope.classList.remove('open');
+    fullLetter.classList.remove('show');
+    envHint.style.opacity = '0.65';
+    document.querySelectorAll('.card.flipped').forEach(c=>c.classList.remove('flipped'));
+    goTo(0);
+  });
+</script>
+</body>
+</html>
